@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Guides — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a>
+    <span>/</span>
+    <span class="current">Preparation Guides</span>
+  </div>
+
+  <h2>Preparation Guides</h2>
+  <p style="margin-bottom:2.5rem;">Master every aspect of interview preparation. Work through each guide before taking your mock interview.</p>
+
+  <div class="card-grid">
+    <a href="{{ url_for('guide_confidence') }}" class="guide-card card">
+      <span class="guide-icon">💪</span>
+      <h3>Confidence & Mindset</h3>
+      <p>Build the mental resilience and self-belief that interviewers notice immediately. Learn how preparation turns nerves into performance.</p>
+      <span class="card-arrow">Read guide →</span>
+    </a>
+    <a href="{{ url_for('guide_dressing') }}" class="guide-card card">
+      <span class="guide-icon">👔</span>
+      <h3>Dressing & Presentation</h3>
+      <p>First impressions are formed in seconds. Understand what to wear for different industries and how to present yourself professionally.</p>
+      <span class="card-arrow">Read guide →</span>
+    </a>
+    <a href="{{ url_for('guide_bodylanguage') }}" class="guide-card card">
+      <span class="guide-icon">🤝</span>
+      <h3>Body Language</h3>
+      <p>Over 50% of communication is non-verbal. Learn the posture, eye contact, and gestures that project competence and confidence.</p>
+      <span class="card-arrow">Read guide →</span>
+    </a>
+    <a href="{{ url_for('guide_howtoanswer') }}" class="guide-card card">
+      <span class="guide-icon">💬</span>
+      <h3>How to Answer Questions</h3>
+      <p>Master the STAR method and other frameworks to give clear, structured, and compelling answers to any interview question.</p>
+      <span class="card-arrow">Read guide →</span>
+    </a>
+  </div>
+
+  <div class="guide-cta" style="margin-top:3rem;">
+    <h3>Ready to test yourself?</h3>
+    <p>Once you have read the guides, put your preparation to the test with a personalised AI mock interview.</p>
+    <a href="{{ url_for('interview_setup') }}" class="btn btn-primary">Start Mock Interview</a>
+  </div>
+</div>
+{% endblock %}
