@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Confidence & Mindset — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('guides') }}">Guides</a><span>/</span>
+    <span class="current">Confidence & Mindset</span>
+  </div>
+
+  <div class="guide-header">
+    <span style="font-size:3rem;">💪</span>
+    <h1 style="margin-top:0.75rem;">Confidence & Mindset</h1>
+    <p style="margin-top:0.5rem;">Confidence is not about being perfect — it is about being prepared. This guide gives you the tools to walk in calm, focused, and ready.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>Why Confidence Matters</h3>
+    <p>Interviewers are not just assessing your skills — they are deciding whether they want to work with you. A candidate who speaks with quiet confidence and composure is far more memorable than one who is technically strong but visibly anxious. The good news is that confidence is a skill, not a personality trait.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>Top Tips for Interview Confidence</h3>
+    <ul class="guide-tips">
+      <li>Prepare answers to at least 5 common questions before the interview — uncertainty is the biggest driver of nerves.</li>
+      <li>Practise out loud, not just in your head. Saying words aloud activates different parts of your brain and reduces stumbling on the day.</li>
+      <li>Use the two-second pause. Before answering, take a breath. It looks composed, not slow.</li>
+      <li>Research the company thoroughly. Knowing their mission, recent news, and products removes the fear of being caught off guard.</li>
+      <li>Remember that the interviewer wants you to succeed — they are not looking for reasons to reject you.</li>
+      <li>Reframe nerves as excitement. Physiologically they are almost identical. Tell yourself you are excited, not scared.</li>
+      <li>Use power poses for two minutes before the interview. Research suggests this can measurably reduce cortisol levels.</li>
+    </ul>
+  </div>
+
+  <div class="card video-section" style="margin-bottom:1.5rem;">
+    <h3>📺 Watch: How to Be Confident in an Interview</h3>
+    <div class="video-embed" style="margin-top:1rem;">
+      <iframe src="https://www.youtube.com/embed/NA5_WyR6xYM" title="Interview Confidence" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="guide-cta">
+    <h3>Next Step</h3>
+    <p>Now that you understand the mindset, learn how to present yourself visually.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="{{ url_for('guide_dressing') }}" class="btn btn-primary">Next: Dressing & Presentation →</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">Take Mock Interview</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

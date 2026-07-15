@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dressing & Presentation — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('guides') }}">Guides</a><span>/</span>
+    <span class="current">Dressing & Presentation</span>
+  </div>
+
+  <div class="guide-header">
+    <span style="font-size:3rem;">👔</span>
+    <h1 style="margin-top:0.75rem;">Dressing & Presentation</h1>
+    <p style="margin-top:0.5rem;">You are assessed before you say a single word. How you dress communicates professionalism, preparation, and respect.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>The Golden Rule</h3>
+    <p>Always dress one level above the company's everyday dress code. If they are business casual, go smart casual. If they are casual, go business casual. When in doubt, it is always safer to be slightly overdressed than underdressed. You can always dress down; you cannot undo a poor first impression.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>By Industry</h3>
+    <ul class="guide-tips">
+      <li><strong style="color:var(--white);">Finance & Law:</strong> Full business formal. Dark suit, white or light shirt, conservative tie for men. Tailored suit or formal dress for women.</li>
+      <li><strong style="color:var(--white);">Tech & Startups:</strong> Smart casual. Clean chinos or dark jeans, a neat shirt or blouse. Avoid gym wear or anything too casual.</li>
+      <li><strong style="color:var(--white);">Creative Industries:</strong> Smart with personality. You can show individual style but keep it polished and intentional.</li>
+      <li><strong style="color:var(--white);">Healthcare & Education:</strong> Conservative and neat. Modest, clean, professional — nothing that would distract or create discomfort.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>Presentation Checklist</h3>
+    <ul class="guide-tips">
+      <li>Clothes are clean, ironed, and well-fitted — not too tight or too loose.</li>
+      <li>Shoes are clean and appropriate for the outfit.</li>
+      <li>Hair is neat and groomed. If long, consider whether it should be tied back.</li>
+      <li>Minimal and subtle fragrance — strong perfume or cologne can be off-putting in a small room.</li>
+      <li>Nails are clean and tidy.</li>
+      <li>Bag or portfolio looks professional, not worn out.</li>
+    </ul>
+  </div>
+
+  <div class="card video-section" style="margin-bottom:1.5rem;">
+    <h3>📺 Watch: What to Wear to a Job Interview</h3>
+    <div class="video-embed" style="margin-top:1rem;">
+      <iframe src="https://www.youtube.com/embed/UbcLJjxIpyU" title="Interview Dressing" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="guide-cta">
+    <h3>Next Step</h3>
+    <p>You look the part — now make sure your body language matches.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="{{ url_for('guide_bodylanguage') }}" class="btn btn-primary">Next: Body Language →</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">Take Mock Interview</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
