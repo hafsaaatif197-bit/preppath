@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Body Language — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('guides') }}">Guides</a><span>/</span>
+    <span class="current">Body Language</span>
+  </div>
+
+  <div class="guide-header">
+    <span style="font-size:3rem;">🤝</span>
+    <h1 style="margin-top:0.75rem;">Body Language</h1>
+    <p style="margin-top:0.5rem;">Research consistently shows that non-verbal communication carries more weight than words alone. Your posture, eye contact, and gestures speak before you do.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>The Handshake & Greeting</h3>
+    <ul class="guide-tips">
+      <li>A firm but not crushing handshake signals confidence and professionalism.</li>
+      <li>Make eye contact and smile when introduced — it immediately creates warmth.</li>
+      <li>Wait to be invited to sit. This is a small detail that shows awareness and respect.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>During the Interview</h3>
+    <ul class="guide-tips">
+      <li>Sit up straight but not rigid. Lean forward slightly to show engagement.</li>
+      <li>Maintain natural eye contact — look at the interviewer when they speak and when you answer. Do not stare unblinkingly, but do not look at the floor either.</li>
+      <li>Keep hands visible and relaxed on the table. Avoid fidgeting, tapping, or playing with objects.</li>
+      <li>Nod occasionally to show you are listening and engaged.</li>
+      <li>Avoid crossing your arms — it can appear closed off or defensive.</li>
+      <li>Mirror the interviewer's energy level subtly. If they are calm and measured, match that.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>Common Mistakes to Avoid</h3>
+    <ul class="guide-tips">
+      <li>Looking at your phone, even briefly, is an immediate red flag.</li>
+      <li>Slouching communicates disinterest or low confidence.</li>
+      <li>Excessive nodding looks nervous or insincere.</li>
+      <li>Avoiding eye contact entirely suggests dishonesty or anxiety.</li>
+    </ul>
+  </div>
+
+  <div class="card video-section" style="margin-bottom:1.5rem;">
+    <h3>📺 Watch: Body Language Tips for Interviews</h3>
+    <div class="video-embed" style="margin-top:1rem;">
+      <iframe src="https://www.youtube.com/embed/PCWVi5pAa30" title="Interview Body Language" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="guide-cta">
+    <h3>One More Guide to Go</h3>
+    <p>Learn how to structure your answers so they are clear, relevant, and memorable.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="{{ url_for('guide_howtoanswer') }}" class="btn btn-primary">Next: How to Answer Questions →</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">Take Mock Interview</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

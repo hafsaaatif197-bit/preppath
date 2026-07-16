@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}How to Answer Questions — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('guides') }}">Guides</a><span>/</span>
+    <span class="current">How to Answer Questions</span>
+  </div>
+
+  <div class="guide-header">
+    <span style="font-size:3rem;">💬</span>
+    <h1 style="margin-top:0.75rem;">How to Answer Questions</h1>
+    <p style="margin-top:0.5rem;">Knowing what to say is only half the battle. How you structure and deliver your answers is what separates good candidates from great ones.</p>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>The STAR Method</h3>
+    <p style="margin-bottom:1rem;">STAR is the most widely recommended framework for answering behavioural interview questions. It gives your answer a clear structure that is easy to follow and demonstrates your thinking.</p>
+    <div class="star-steps">
+      <div class="star-step">
+        <div class="star-letter">S</div>
+        <div class="star-step-text"><strong>Situation</strong><span>Set the scene. Where were you, what was the context?</span></div>
+      </div>
+      <div class="star-step">
+        <div class="star-letter">T</div>
+        <div class="star-step-text"><strong>Task</strong><span>What was your specific responsibility in that situation?</span></div>
+      </div>
+      <div class="star-step">
+        <div class="star-letter">A</div>
+        <div class="star-step-text"><strong>Action</strong><span>What did YOU do? Be specific — use "I", not "we".</span></div>
+      </div>
+      <div class="star-step">
+        <div class="star-letter">R</div>
+        <div class="star-step-text"><strong>Result</strong><span>What happened? Quantify where possible.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>Example STAR Answer</h3>
+    <p style="margin-bottom:1rem;font-size:0.9rem;color:var(--blue-sky);font-weight:600;">Question: "Tell me about a time you worked under pressure."</p>
+    <ul class="guide-tips">
+      <li><strong style="color:var(--blue-sky);">S —</strong> During my final year, our group project lost a team member two weeks before the deadline.</li>
+      <li><strong style="color:var(--blue-sky);">T —</strong> I was responsible for redistributing the work and keeping the team motivated under a tight timeline.</li>
+      <li><strong style="color:var(--blue-sky);">A —</strong> I created a shared task board, held daily ten-minute check-ins, and took on the most critical missing sections myself.</li>
+      <li><strong style="color:var(--blue-sky);">R —</strong> We submitted on time and received a grade of 74%, which was above our previous average for the module.</li>
+    </ul>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;">
+    <h3>General Tips for Any Question</h3>
+    <ul class="guide-tips">
+      <li>Pause for two seconds before answering. This is not weakness — it shows you are thoughtful.</li>
+      <li>Keep answers between 90 seconds and 2 minutes. Long enough to be substantive, short enough to be engaging.</li>
+      <li>Always end on the result or what you learned. Never leave an answer trailing off.</li>
+      <li>Avoid filler words like "um", "like", and "basically". Practise until they disappear.</li>
+      <li>If you do not understand a question, ask for clarification — this is professional, not a weakness.</li>
+    </ul>
+  </div>
+
+  <div class="card video-section" style="margin-bottom:1.5rem;">
+    <h3>📺 Watch: How to Use the STAR Method</h3>
+    <div class="video-embed" style="margin-top:1rem;">
+      <iframe src="https://www.youtube.com/embed/WRLF8ULhZmw" title="STAR Method" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <div class="guide-cta">
+    <h3>You have completed all the guides! 🎉</h3>
+    <p>Now build your STAR answers or go straight into your mock interview.</p>
+    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+      <a href="{{ url_for('star_builder') }}" class="btn btn-primary">Build STAR Answers →</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">Take Mock Interview</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -113,6 +113,16 @@ def guide_confidence():
 def guide_dressing():
     return render_template("guide_dressing.html")
 
+@app.route("/guides/bodylanguage")
+@login_required
+def guide_bodylanguage():
+    return render_template("guide_bodylanguage.html")
+
+@app.route("/guides/howtoanswer")
+@login_required
+def guide_howtoanswer():
+    return render_template("guide_howtoanswer.html")
+
 # ─── RUN ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     init_db()
