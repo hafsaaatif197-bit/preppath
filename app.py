@@ -116,8 +116,12 @@ def guide_dressing():
 @app.route("/guides/bodylanguage")
 @login_required
 def guide_bodylanguage():
-    log_activity(current_user.id, "guide_bodylanguage")
     return render_template("guide_bodylanguage.html")
+
+@app.route("/guides/howtoanswer")
+@login_required
+def guide_howtoanswer():
+    return render_template("guide_howtoanswer.html")
 
 # ─── RUN ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
