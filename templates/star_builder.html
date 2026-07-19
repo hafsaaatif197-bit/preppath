@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}STAR Builder — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <span class="current">STAR Method Builder</span>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+    <div>
+      <h2 style="margin-bottom:0.5rem;">STAR Method Builder</h2>
+      <p>Fill in each section and the app will build a complete, structured interview answer for you.</p>
+    </div>
+    <a href="{{ url_for('star_saved') }}" class="btn btn-outline">View Saved Answers</a>
+  </div>
+
+  <div class="star-steps" style="margin-bottom:2rem;">
+    <div class="star-step"><div class="star-letter">S</div><div class="star-step-text"><strong>Situation</strong><span>Set the context</span></div></div>
+    <div class="star-step"><div class="star-letter">T</div><div class="star-step-text"><strong>Task</strong><span>Your responsibility</span></div></div>
+    <div class="star-step"><div class="star-letter">A</div><div class="star-step-text"><strong>Action</strong><span>What you did</span></div></div>
+    <div class="star-step"><div class="star-letter">R</div><div class="star-step-text"><strong>Result</strong><span>The outcome</span></div></div>
+  </div>
+
+  <div class="card">
+    <form method="POST">
+      <div class="form-group">
+        <label>Interview Question (optional)</label>
+        <input type="text" name="question" class="form-control" placeholder='e.g. "Tell me about a time you worked in a team"' />
+      </div>
+      <div class="form-group">
+        <label>S — Situation</label>
+        <textarea name="situation" class="form-control" placeholder="Describe the background and context. Where were you? What was happening?" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>T — Task</label>
+        <textarea name="task" class="form-control" placeholder="What was your specific role or responsibility in that situation?" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>A — Action</label>
+        <textarea name="action" class="form-control" placeholder="What did YOU specifically do? Use 'I' not 'we'. Be precise about your actions." required></textarea>
+      </div>
+      <div class="form-group">
+        <label>R — Result</label>
+        <textarea name="result" class="form-control" placeholder="What was the outcome? Quantify if possible (e.g. scored 78%, reduced time by 30%)." required></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg btn-full">Build My Answer</button>
+    </form>
+  </div>
+
+  {% if answer %}
+  <div class="built-answer-box">
+    <h3>✅ Your Structured Answer</h3>
+    <p>{{ answer }}</p>
+    <div style="margin-top:1.5rem;padding-top:1rem;border-top:1px solid rgba(86,204,242,0.15);">
+      <p style="font-size:0.85rem;color:var(--text-muted);">This answer has been saved to your profile. You can view all saved answers anytime.</p>
+      <div style="display:flex;gap:1rem;margin-top:1rem;flex-wrap:wrap;">
+        <a href="{{ url_for('star_saved') }}" class="btn btn-outline">View All Saved Answers</a>
+        <a href="{{ url_for('interview_setup') }}" class="btn btn-primary">Take Mock Interview →</a>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+
+</div>
+{% endblock %}
