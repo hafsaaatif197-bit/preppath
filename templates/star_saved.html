@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Saved Answers — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('star_builder') }}">STAR Builder</a><span>/</span>
+    <span class="current">Saved Answers</span>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-bottom:2rem;">
+    <h2 style="margin-bottom:0;">Your Saved STAR Answers</h2>
+    <a href="{{ url_for('star_builder') }}" class="btn btn-primary">+ Build New Answer</a>
+  </div>
+
+  {% if answers %}
+    {% for ans in answers %}
+    <div class="answer-item">
+      {% if ans.question %}
+        <div class="answer-q">💬 {{ ans.question }}</div>
+      {% endif %}
+      <div class="answer-text">{{ ans.full_answer }}</div>
+      <div style="margin-top:1rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0.75rem;">
+        <div style="font-size:0.8rem;"><span style="color:var(--blue-sky);font-weight:700;">S</span> <span style="color:var(--text-muted);">{{ ans.situation[:60] }}...</span></div>
+        <div style="font-size:0.8rem;"><span style="color:var(--blue-sky);font-weight:700;">T</span> <span style="color:var(--text-muted);">{{ ans.task[:60] }}...</span></div>
+        <div style="font-size:0.8rem;"><span style="color:var(--blue-sky);font-weight:700;">A</span> <span style="color:var(--text-muted);">{{ ans.action[:60] }}...</span></div>
+        <div style="font-size:0.8rem;"><span style="color:var(--blue-sky);font-weight:700;">R</span> <span style="color:var(--text-muted);">{{ ans.result[:60] }}...</span></div>
+      </div>
+      <div class="answer-date">Saved on {{ ans.created_at[:10] }}</div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state card">
+      <span class="empty-icon">🎯</span>
+      <h3>No saved answers yet</h3>
+      <p style="margin:0.5rem 0 1.5rem;">Use the STAR Builder to create structured answers to common interview questions.</p>
+      <a href="{{ url_for('star_builder') }}" class="btn btn-primary">Build Your First Answer</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
