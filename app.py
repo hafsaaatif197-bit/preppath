@@ -123,6 +123,35 @@ def guide_bodylanguage():
 def guide_howtoanswer():
     return render_template("guide_howtoanswer.html")
 
+@app.route("/star-builder", methods=["GET", "POST"])
+@login_required
+def star_builder():
+    if request.method == "POST":
+        title = request.form["title"]
+        situation = request.form["situation"]
+        task = request.form["task"]
+        action = request.form["action"]
+        result = request.form["result"]
+
+        conn = get_db()
+        conn.execute(
+            "INSERT INTO star_answers (user_id, title, situation, task, action, result) VALUES (?, ?, ?, ?, ?, ?)",
+            (current_user.id, title, situation, task, action, result)
+        )
+        conn.commit()
+        conn.close()
+        flash("STAR Response saved successfully!", "success")
+        return redirect(url_for("star_answers"))
+    return render_template("star_builder.html")
+
+@app.route("/star-answers")
+@login_required
+def star_answers():
+    conn = get_db()
+    answers = conn.execute("SELECT * FROM star_answers WHERE user_id = ? ORDER BY created_at DESC", (current_user.id,)).fetchall()
+    conn.close()
+    return render_template("star_saved.html", answers=answers)
+
 # ─── RUN ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     init_db()
