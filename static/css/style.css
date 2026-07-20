@@ -62,6 +62,7 @@ body {
   font-size: 0.9rem;
   font-weight: 500;
   transition: all 0.2s;
+}
 /* ── PAGE WRAPPER ──────────────────────────────────────── */
 .page { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
 .page-sm { max-width: 500px; margin: 0 auto; padding: 3rem 2rem; }
@@ -91,6 +92,7 @@ p { color: var(--text-muted); line-height: 1.7; }
 .btn-primary {
   background: var(--blue-bright);
   color: var(--white);
+}
 
 /* ── CARDS ─────────────────────────────────────────────── */
 .card {
@@ -251,6 +253,7 @@ select.form-control option { background: var(--navy-mid); }
 .guide-cta h3 { color: var(--white); margin-bottom: 0.5rem; }
 .guide-cta p { margin-bottom: 1.25rem; }
 
+
 /* ── STAR BUILDER ──────────────────────────────────────── */
 .star-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
 .star-step {
@@ -283,6 +286,102 @@ select.form-control option { background: var(--navy-mid); }
 }
 .built-answer-box h3 { color: var(--blue-sky); margin-bottom: 1rem; }
 .built-answer-box p { color: var(--off-white); font-size: 1rem; line-height: 1.8; }
+
+/* ── INTERVIEW ─────────────────────────────────────────── */
+.interview-type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+.type-option input[type="radio"] { display: none; }
+.type-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(46,134,193,0.2);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.type-option label .type-icon { font-size: 1.75rem; }
+.type-option input[type="radio"]:checked + label {
+  border-color: var(--blue-bright);
+  background: rgba(46,134,193,0.12);
+  color: var(--white);
+  box-shadow: 0 0 0 2px rgba(46,134,193,0.3);
+}
+.question-display {
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy-deep));
+  border: 1px solid rgba(86,204,242,0.25);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.question-display::before {
+  content: '"';
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  color: rgba(86,204,242,0.15);
+  position: absolute;
+  top: 0.5rem;
+  left: 1.5rem;
+  line-height: 1;
+}
+.question-text {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  color: var(--white);
+  line-height: 1.5;
+  padding-top: 1rem;
+}
+.mic-btn {
+  background: rgba(46,134,193,0.15);
+  border: 1px solid rgba(46,134,193,0.3);
+  color: var(--blue-sky);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s;
+}
+.mic-btn:hover { background: rgba(46,134,193,0.25); }
+.mic-btn.listening { background: rgba(231,76,60,0.2); border-color: var(--danger); color: var(--danger); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+/* ── FEEDBACK ──────────────────────────────────────────── */
+.feedback-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+.feedback-metric {
+  background: var(--navy-mid);
+  border: 1px solid rgba(46,134,193,0.15);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-align: center;
+}
+.metric-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--blue-sky);
+  line-height: 1;
+}
+.metric-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.5rem; }
+.metric-note { font-size: 0.85rem; color: var(--off-white); margin-top: 0.5rem; }
+.tip-box {
+  background: rgba(46,134,193,0.08);
+  border-left: 4px solid var(--blue-bright);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.tip-box strong { color: var(--blue-sky); display: block; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.tip-box p { color: var(--off-white); } 
 
 /* ── RESPONSIVE ────────────────────────────────────────── */
 @media (max-width: 768px) {
