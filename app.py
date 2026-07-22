@@ -122,7 +122,7 @@ def guide_bodylanguage():
 @login_required
 def guide_howtoanswer():
     return render_template("guide_howtoanswer.html")
-
+# ─── STAR BUILDER ───────────────────────────────────────────
 @app.route("/star-builder", methods=["GET", "POST"])
 @login_required
 def star_builder():
@@ -156,3 +156,4 @@ def star_answers():
 if __name__ == "__main__":
     init_db()
     app.run(debug=True)
+    
