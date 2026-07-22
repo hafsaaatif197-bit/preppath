@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="hero">
+    <div>
+      <h1>Hello, {{ current_user.name.split()[0] }} 👋</h1>
+      <p class="hero-sub">Welcome to PrepPath. Learn behavioral strategies and structure your professional stories.</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('guides') }}" class="btn btn-primary">Browse Guides</a>
+        <a href="{{ url_for('star_builder') }}" class="btn btn-outline">STAR Builder</a>
+      </div>
+    </div>
+  </div>
+
+  <h2>Your Preparation Path</h2>
+  <div class="card-grid">
+    <a href="{{ url_for('guides') }}" class="guide-card card">
+      <h3>Preparation Guides</h3>
+      <p>Master confidence, body language, and dressing techniques for your next interview.</p>
+    </a>
+  </div>
+</div>
+{% endblock %}
