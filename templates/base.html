@@ -7,15 +7,29 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"/>
 </head>
 <body>
+
+  {% if current_user.is_authenticated %}
+  <nav class="navbar" style="display:flex; justify-content:space-between; padding:1rem; background:#0A1628; color:white;">
+    <a href="{{ url_for('home') }}" style="color:#56CCF2; text-decoration:none; font-weight:bold;">PrepPath</a>
+    <div>
+      <a href="{{ url_for('home') }}" style="color:white; margin-right:1rem; text-decoration:none;">Home</a>
+      <a href="{{ url_for('guides') }}" style="color:white; margin-right:1rem; text-decoration:none;">Guides</a>
+      <a href="{{ url_for('star_builder') }}" style="color:white; margin-right:1rem; text-decoration:none;">STAR Builder</a>
+      <a href="{{ url_for('logout') }}" style="color:#E74C3C; text-decoration:none;">Logout</a>
+    </div>
+  </nav>
+  {% endif %}
+
   {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-      <div class="flash-container">
+      <div class="flash-container" style="padding:1rem;">
         {% for category, message in messages %}
-          <div class="flash flash-{{ category }}">{{ message }}</div>
+          <div class="flash flash-{{ category }}" style="padding:0.75rem; margin-bottom:0.5rem; border-radius:4px;">{{ message }}</div>
         {% endfor %}
       </div>
     {% endif %}
   {% endwith %}
+
   {% block content %}{% endblock %}
 </body>
 </html>
