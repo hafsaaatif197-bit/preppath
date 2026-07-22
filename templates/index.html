@@ -5,19 +5,26 @@
   <div class="hero">
     <div>
       <h1>Hello, {{ current_user.name.split()[0] }} 👋</h1>
-      <p class="hero-sub">Welcome to PrepPath. Learn behavioral strategies and structure your professional stories.</p>
-      <div class="hero-actions">
+      <p class="hero-sub">Welcome to PrepPath. Start your preparation by exploring our comprehensive modules.</p>
+      <div class="hero-actions" style="margin-top: 1.5rem;">
         <a href="{{ url_for('guides') }}" class="btn btn-primary">Browse Guides</a>
-        <a href="{{ url_for('star_builder') }}" class="btn btn-outline">STAR Builder</a>
+        <!-- STAR Builder Button -->
+        <a href="{{ url_for('star_builder') }}" class="btn btn-outline" style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid #56CCF2; border-radius: 4px; color: #56CCF2; text-decoration: none;">STAR Framework Builder</a>
       </div>
     </div>
   </div>
 
   <h2>Your Preparation Path</h2>
-  <div class="card-grid">
-    <a href="{{ url_for('guides') }}" class="guide-card card">
+  <div class="card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+    <a href="{{ url_for('guides') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
       <h3>Preparation Guides</h3>
       <p>Master confidence, body language, and dressing techniques for your next interview.</p>
+    </a>
+    
+    <!-- Added Card for STAR Method Builder on the Grid -->
+    <a href="{{ url_for('star_builder') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
+      <h3>STAR Method Builder</h3>
+      <p>Build structured, compelling answers to behavioural questions using the proven STAR framework.</p>
     </a>
   </div>
 </div>
