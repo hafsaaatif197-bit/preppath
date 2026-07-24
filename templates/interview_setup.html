@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Mock Interview — PrepPath{% endblock %}
+{% block content %}
+<div class="page" style="max-width:700px;">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <span class="current">Mock Interview</span>
+  </div>
+
+  <h2>Set Up Your Mock Interview</h2>
+  <p style="margin-bottom:2rem;">Tell us about the role you are applying for. We will generate tailored questions and give you personalised feedback.</p>
+
+  <div class="card">
+    <form method="POST" enctype="multipart/form-data">
+
+      <div class="form-group">
+        <label>Interview Type</label>
+        <div class="interview-type-grid">
+          <div class="type-option">
+            <input type="radio" name="interview_type" id="behavioural" value="behavioural" checked />
+            <label for="behavioural"><span class="type-icon">🧠</span>Behavioural</label>
+          </div>
+          <div class="type-option">
+            <input type="radio" name="interview_type" id="technical" value="technical" />
+            <label for="technical"><span class="type-icon">💻</span>Technical</label>
+          </div>
+          <div class="type-option">
+            <input type="radio" name="interview_type" id="mixed" value="mixed" />
+            <label for="mixed"><span class="type-icon">🔀</span>Mixed</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Job Role / Position</label>
+        <input type="text" name="job_role" class="form-control" placeholder='e.g. "Software Engineer", "Marketing Assistant"' required />
+      </div>
+
+      <div class="form-group">
+        <label>Your Key Skills (optional)</label>
+        <input type="text" name="skills" class="form-control" placeholder='e.g. "Python, teamwork, project management, SQL"' />
+        <small style="color:var(--text-muted);font-size:0.8rem;margin-top:0.4rem;display:block;">Helps us generate more relevant questions for you.</small>
+      </div>
+
+      <div class="form-group">
+        <label>Upload Your CV (optional — PDF only)</label>
+        <input type="file" name="cv" accept=".pdf" class="form-control" style="padding:0.6rem;" />
+        <small style="color:var(--text-muted);font-size:0.8rem;margin-top:0.4rem;display:block;">We will read your CV to personalise the questions further. Nothing is stored permanently.</small>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full btn-lg" style="margin-top:0.5rem;">
+        Generate My Interview Question →
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock %}
