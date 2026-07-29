@@ -66,10 +66,21 @@
   {% endfor %}
 
   <!-- Actions -->
-  <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;">
-    <a href="{{ url_for('interview_question') }}" class="btn btn-primary btn-lg">Try Another Question →</a>
-    <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">New Interview Setup</a>
-    <a href="{{ url_for('dashboard') }}" class="btn btn-outline">View My Progress</a>
-  </div>
+  {% if session_complete %}
+    <div class="tip-box" style="margin-top:1.5rem;">
+      <strong>✅ Interview Session Complete</strong>
+      <p>You answered {{ q_num }} of {{ q_total }} questions in this session. Check your dashboard to see your updated readiness score.</p>
+    </div>
+    <div style="display:flex;gap:1rem;margin-top:1.5rem;flex-wrap:wrap;">
+      <a href="{{ url_for('dashboard') }}" class="btn btn-primary btn-lg">View My Progress</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">Start New Interview</a>
+    </div>
+  {% else %}
+    <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;">
+      <a href="{{ url_for('interview_question') }}" class="btn btn-primary btn-lg">Next Question →</a>
+      <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">New Interview Setup</a>
+      <a href="{{ url_for('dashboard') }}" class="btn btn-outline">View My Progress</a>
+    </div>
+  {% endif %}
 </div>
 {% endblock %}
