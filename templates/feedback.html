@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Feedback — PrepPath{% endblock %}
+{% block content %}
+<div class="page" style="max-width:750px;">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <a href="{{ url_for('interview_setup') }}">Mock Interview</a><span>/</span>
+    <span class="current">Your Feedback</span>
+  </div>
+
+  <h2>Interview Feedback</h2>
+  <p style="margin-bottom:2rem;">Here is a breakdown of your answer. Use this to identify strengths and areas to improve.</p>
+
+  <!-- Question recap -->
+  <div class="question-display" style="margin-bottom:2rem;">
+    <p class="question-text" style="font-size:1.1rem;">{{ question }}</p>
+  </div>
+
+  <!-- Your answer -->
+  <div class="card" style="margin-bottom:2rem;">
+    <span class="section-label">Your Answer</span>
+    <p style="color:var(--off-white);line-height:1.8;">{{ answer }}</p>
+  </div>
+
+  <!-- Feedback scores -->
+  <span class="section-label">AI Feedback</span>
+  <div class="feedback-grid">
+    {% set lines = feedback.split('\n') %}
+    {% for line in lines %}
+      {% if line.startswith('Clarity:') %}
+        {% set parts = line.split(' - ') %}
+        {% set score_part = parts[0].replace('Clarity:', '').strip() %}
+        <div class="feedback-metric">
+          <div class="metric-score">{{ score_part }}</div>
+          <div class="metric-label">Clarity</div>
+          {% if parts|length > 1 %}<div class="metric-note">{{ parts[1] }}</div>{% endif %}
+        </div>
+      {% elif line.startswith('Relevance:') %}
+        {% set parts = line.split(' - ') %}
+        {% set score_part = parts[0].replace('Relevance:', '').strip() %}
+        <div class="feedback-metric">
+          <div class="metric-score">{{ score_part }}</div>
+          <div class="metric-label">Relevance</div>
+          {% if parts|length > 1 %}<div class="metric-note">{{ parts[1] }}</div>{% endif %}
+        </div>
+      {% elif line.startswith('Completeness:') %}
+        {% set parts = line.split(' - ') %}
+        {% set score_part = parts[0].replace('Completeness:', '').strip() %}
+        <div class="feedback-metric">
+          <div class="metric-score">{{ score_part }}</div>
+          <div class="metric-label">Completeness</div>
+          {% if parts|length > 1 %}<div class="metric-note">{{ parts[1] }}</div>{% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Overall tip -->
+  {% for line in lines %}
+    {% if line.startswith('Overall Tip:') %}
+      <div class="tip-box">
+        <strong>💡 Overall Tip</strong>
+        <p>{{ line.replace('Overall Tip:', '').strip() }}</p>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <!-- Actions -->
+  <div style="display:flex;gap:1rem;margin-top:2.5rem;flex-wrap:wrap;">
+    <a href="{{ url_for('interview_question') }}" class="btn btn-primary btn-lg">Try Another Question →</a>
+    <a href="{{ url_for('interview_setup') }}" class="btn btn-outline">New Interview Setup</a>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-outline">View My Progress</a>
+  </div>
+</div>
+{% endblock %}
