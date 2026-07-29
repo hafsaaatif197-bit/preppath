@@ -10,6 +10,8 @@
         <a href="{{ url_for('guides') }}" class="btn btn-primary">Browse Guides</a>
         <!-- STAR Builder Button -->
         <a href="{{ url_for('star_builder') }}" class="btn btn-outline" style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid #56CCF2; border-radius: 4px; color: #56CCF2; text-decoration: none;">STAR Framework Builder</a>
+        <!-- Mock Interview Button -->
+        <a href="{{ url_for('interview_setup') }}" class="btn btn-outline" style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid #56CCF2; border-radius: 4px; color: #56CCF2; text-decoration: none;">Mock Interview</a>
       </div>
     </div>
   </div>
@@ -25,6 +27,12 @@
     <a href="{{ url_for('star_builder') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
       <h3>STAR Method Builder</h3>
       <p>Build structured, compelling answers to behavioural questions using the proven STAR framework.</p>
+    </a>
+
+    <!-- Added Card for Mock Interview on the Grid -->
+    <a href="{{ url_for('interview_setup') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
+      <h3>Mock Interview</h3>
+      <p>Practice AI-generated interview questions tailored to your role and CV, and get instant feedback.</p>
     </a>
   </div>
 </div>

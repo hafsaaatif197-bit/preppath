@@ -246,6 +246,8 @@ def star_saved():
     return render_template("star_saved.html", answers=answers)
 
 # ─── INTERVIEW ROUTES ───────────────────────────────────────────────
+TOTAL_INTERVIEW_QUESTIONS = 5  # how many questions make up one mock interview session
+
 @app.route("/interview", methods=["GET", "POST"])
 @login_required
 def interview_setup():
@@ -253,6 +255,7 @@ def interview_setup():
         session["job_role"] = request.form["job_role"]
         session["interview_type"] = request.form["interview_type"]
         session["skills"] = request.form.get("skills", "")
+        session["interview_q_num"] = 0
         cv_text = ""
         if "cv" in request.files and request.files["cv"].filename != "":
             cv_file = request.files["cv"]
@@ -286,7 +289,13 @@ Return only the question itself, nothing else."""
     )
     question = message.content[0].text
     session["current_question"] = question
-    return render_template("interview.html", question=question)
+    session["interview_q_num"] = session.get("interview_q_num", 0) + 1
+    return render_template(
+        "interview.html",
+        question=question,
+        q_num=session["interview_q_num"],
+        q_total=TOTAL_INTERVIEW_QUESTIONS
+    )
 
 @app.route("/interview/submit", methods=["POST"])
 @login_required
@@ -324,7 +333,16 @@ Overall Tip: [one specific, actionable improvement tip]"""
     conn.close()
     log_activity(current_user.id, "mock_interview")
 
-    return render_template("feedback.html", question=question, answer=answer, feedback=feedback)
+    session_complete = session.get("interview_q_num", 0) >= TOTAL_INTERVIEW_QUESTIONS
+    return render_template(
+        "feedback.html",
+        question=question,
+        answer=answer,
+        feedback=feedback,
+        q_num=session.get("interview_q_num", 0),
+        q_total=TOTAL_INTERVIEW_QUESTIONS,
+        session_complete=session_complete
+    )
 
 # ─── DASHBOARD ──────────────────────────────────────────────────────
 @app.route("/dashboard")
@@ -338,57 +356,6 @@ def dashboard():
     conn.close()
     score = get_readiness_score(current_user.id)
     return render_template("dashboard.html", sessions=sessions, score=score)
-
-# ─── INTERVIEW PLANNER (dedicated page) ─────────────────────────────
-@app.route("/planner", methods=["GET", "POST"])
-@login_required
-def planner():
-    if request.method == "POST":
-        interview_date = request.form["interview_date"]
-        job_role = request.form["job_role"]
-        conn = get_db()
-        conn.execute("DELETE FROM interview_planner WHERE user_id = ?", (current_user.id,))
-        conn.execute(
-            "INSERT INTO interview_planner (user_id, interview_date, job_role) VALUES (?,?,?)",
-            (current_user.id, interview_date, job_role)
-        )
-        conn.commit()
-        conn.close()
-        return redirect(url_for("planner"))
-
-    conn = get_db()
-    plan_row = conn.execute(
-        "SELECT * FROM interview_planner WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
-        (current_user.id,)
-    ).fetchone()
-    conn.close()
-
-    daily_plan = None
-    if plan_row:
-        interview_date = datetime.strptime(plan_row["interview_date"], "%Y-%m-%d")
-        today = datetime.today()
-        days_left = (interview_date - today).days
-        daily_plan = generate_plan(days_left, plan_row["job_role"])
-
-    return render_template("planner.html", planner=plan_row, daily_plan=daily_plan)
-
-def generate_plan(days_left, job_role):
-    if days_left <= 0:
-        return [{"day": "Today", "task": "Good luck in your interview!"}]
-    tasks = [
-        "Read the Confidence & Mindset guide",
-        "Read the Dressing & Presentation guide",
-        "Read the Body Language guide",
-        "Read the How to Answer Questions guide",
-        "Build 2 STAR method answers",
-        "Complete your first mock interview",
-        "Review your feedback and do another mock interview",
-    ]
-    plan = []
-    for i in range(min(days_left, len(tasks))):
-        day_label = f"Day {i+1}" if i > 0 else "Today"
-        plan.append({"day": day_label, "task": tasks[i]})
-    return plan
 
 # ─── RUN ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
