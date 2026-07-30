@@ -63,6 +63,14 @@ body {
   font-weight: 500;
   transition: all 0.2s;
 }
+.navbar-links a:hover { color: var(--white); background: rgba(46,134,193,0.15); }
+.navbar-links a.active { color: var(--blue-sky); }
+.btn-logout {
+  color: var(--text-muted) !important;
+  border: 1px solid rgba(46,134,193,0.2) !important;
+}
+.btn-logout:hover { color: var(--danger) !important; border-color: var(--danger) !important; background: rgba(231,76,60,0.1) !important; }
+
 /* ── PAGE WRAPPER ──────────────────────────────────────── */
 .page { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; }
 .page-sm { max-width: 500px; margin: 0 auto; padding: 3rem 2rem; }
@@ -93,6 +101,15 @@ p { color: var(--text-muted); line-height: 1.7; }
   background: var(--blue-bright);
   color: var(--white);
 }
+.btn-primary:hover { background: #2471A3; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(46,134,193,0.4); }
+.btn-outline {
+  background: transparent;
+  color: var(--blue-sky);
+  border: 1px solid rgba(86,204,242,0.4);
+}
+.btn-outline:hover { background: rgba(86,204,242,0.1); border-color: var(--blue-sky); }
+.btn-full { width: 100%; justify-content: center; }
+.btn-lg { padding: 1rem 2.5rem; font-size: 1.05rem; }
 
 /* ── CARDS ─────────────────────────────────────────────── */
 .card {
@@ -253,7 +270,6 @@ select.form-control option { background: var(--navy-mid); }
 .guide-cta h3 { color: var(--white); margin-bottom: 0.5rem; }
 .guide-cta p { margin-bottom: 1.25rem; }
 
-
 /* ── STAR BUILDER ──────────────────────────────────────── */
 .star-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
 .star-step {
@@ -381,7 +397,94 @@ select.form-control option { background: var(--navy-mid); }
   margin-top: 1.5rem;
 }
 .tip-box strong { color: var(--blue-sky); display: block; margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; }
-.tip-box p { color: var(--off-white); } 
+.tip-box p { color: var(--off-white); }
+
+/* ── DASHBOARD ─────────────────────────────────────────── */
+.dashboard-grid { display: grid; grid-template-columns: 300px 1fr; gap: 2rem; align-items: start; }
+.section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--blue-sky);
+  margin-bottom: 1rem;
+  display: block;
+}
+.session-item {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(46,134,193,0.1);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.session-item .session-role { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+.session-item .session-date { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem; }
+.session-item .session-q { font-size: 0.85rem; color: var(--off-white); margin-top: 0.5rem; }
+.plan-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(46,134,193,0.08);
+}
+.plan-day { font-size: 0.75rem; font-weight: 700; color: var(--blue-sky); min-width: 60px; text-transform: uppercase; }
+.plan-task { font-size: 0.9rem; color: var(--off-white); }
+.empty-state { text-align: center; padding: 3rem; color: var(--text-muted); }
+.empty-state .empty-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+
+/* ── AUTH PAGES ────────────────────────────────────────── */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(ellipse at 30% 20%, rgba(46,134,193,0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 80%, rgba(86,204,242,0.05) 0%, transparent 60%);
+}
+.auth-card {
+  background: var(--navy-mid);
+  border: 1px solid rgba(46,134,193,0.2);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+.auth-logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.75rem;
+  color: var(--white);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+.auth-logo span { color: var(--blue-sky); }
+.auth-sub { text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+.auth-divider { text-align: center; color: var(--text-muted); font-size: 0.85rem; margin: 1.25rem 0; }
+.auth-switch { text-align: center; margin-top: 1.25rem; font-size: 0.9rem; color: var(--text-muted); }
+.auth-switch a { color: var(--blue-sky); text-decoration: none; font-weight: 600; }
+
+/* ── PROGRESS BAR ──────────────────────────────────────── */
+.progress-bar-wrap { background: rgba(255,255,255,0.06); border-radius: 100px; height: 8px; margin-top: 0.75rem; }
+.progress-bar-fill { height: 8px; border-radius: 100px; background: linear-gradient(90deg, var(--blue-bright), var(--blue-sky)); transition: width 1s ease; }
+
+/* ── BREADCRUMB ────────────────────────────────────────── */
+.breadcrumb { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 2rem; font-size: 0.85rem; }
+.breadcrumb a { color: var(--text-muted); text-decoration: none; }
+.breadcrumb a:hover { color: var(--blue-sky); }
+.breadcrumb span { color: var(--text-muted); }
+.breadcrumb .current { color: var(--white); }
+
+/* ── SAVED ANSWERS ─────────────────────────────────────── */
+.answer-item {
+  background: var(--navy-mid);
+  border: 1px solid rgba(46,134,193,0.15);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+.answer-item .answer-q { font-size: 0.85rem; color: var(--blue-sky); font-weight: 600; margin-bottom: 0.75rem; }
+.answer-item .answer-text { color: var(--off-white); font-size: 0.95rem; line-height: 1.7; }
+.answer-item .answer-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.75rem; }
 
 /* ── RESPONSIVE ────────────────────────────────────────── */
 @media (max-width: 768px) {

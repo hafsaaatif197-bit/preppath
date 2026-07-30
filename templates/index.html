@@ -2,38 +2,101 @@
 {% block title %}Home — PrepPath{% endblock %}
 {% block content %}
 <div class="page">
+
+  <!-- HERO -->
   <div class="hero">
     <div>
       <h1>Hello, {{ current_user.name.split()[0] }} 👋</h1>
-      <p class="hero-sub">Welcome to PrepPath. Start your preparation by exploring our comprehensive modules.</p>
-      <div class="hero-actions" style="margin-top: 1.5rem;">
-        <a href="{{ url_for('guides') }}" class="btn btn-primary">Browse Guides</a>
-        <!-- STAR Builder Button -->
-        <a href="{{ url_for('star_builder') }}" class="btn btn-outline" style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid #56CCF2; border-radius: 4px; color: #56CCF2; text-decoration: none;">STAR Framework Builder</a>
-        <!-- Mock Interview Button -->
-        <a href="{{ url_for('interview_setup') }}" class="btn btn-outline" style="margin-left: 1rem; padding: 0.5rem 1rem; border: 1px solid #56CCF2; border-radius: 4px; color: #56CCF2; text-decoration: none;">Mock Interview</a>
+      <p class="hero-sub">Your personalised interview preparation platform. Follow the path, land the role.</p>
+      <div class="hero-actions">
+        <a href="{{ url_for('interview_setup') }}" class="btn btn-primary btn-lg">Start Mock Interview</a>
+        <a href="{{ url_for('guides') }}" class="btn btn-primary btn-lg">Browse Guides</a>
       </div>
+    </div>
+    <div class="score-arc-wrapper">
+      <div class="score-arc">
+        <svg viewBox="0 0 180 180" width="180" height="180">
+          <defs>
+            <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#2E86C1"/>
+              <stop offset="100%" stop-color="#56CCF2"/>
+            </linearGradient>
+          </defs>
+          <circle class="track" cx="90" cy="90" r="78"/>
+          <circle class="fill"  cx="90" cy="90" r="78"
+            stroke-dasharray="490"
+            stroke-dashoffset="{{ 490 - (490 * score / 100) }}"
+            id="arcFill"/>
+        </svg>
+        <div class="score-label">
+          <span class="score-number" id="scoreNum">0</span>
+          <span class="score-pct">/ 100</span>
+        </div>
+      </div>
+      <p class="score-title">Readiness Score</p>
     </div>
   </div>
 
+  <!-- QUICK STATS -->
+  <div class="card-grid" style="margin-bottom:2.5rem;">
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;font-family:'Playfair Display',serif;color:var(--blue-sky);">{{ session_count }}</div>
+      <div style="color:var(--text-muted);font-size:0.9rem;margin-top:0.25rem;">Mock Interviews Completed</div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <div style="font-size:2rem;font-family:'Playfair Display',serif;color:var(--blue-sky);">{{ score }}%</div>
+      <div style="color:var(--text-muted);font-size:0.9rem;margin-top:0.25rem;">Overall Readiness</div>
+      <div class="progress-bar-wrap" style="margin-top:0.75rem;">
+        <div class="progress-bar-fill" style="width:{{ score }}%;"></div>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <a href="{{ url_for('star_saved') }}" style="text-decoration:none;">
+        <div style="font-size:2rem;font-family:'Playfair Display',serif;color:var(--blue-sky);">→</div>
+        <div style="color:var(--text-muted);font-size:0.9rem;margin-top:0.25rem;">View Saved STAR Answers</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- YOUR PATH -->
   <h2>Your Preparation Path</h2>
-  <div class="card-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
-    <a href="{{ url_for('guides') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
+  <div class="card-grid">
+    <a href="{{ url_for('guides') }}" class="guide-card card">
+      <span class="guide-icon">📚</span>
       <h3>Preparation Guides</h3>
-      <p>Master confidence, body language, and dressing techniques for your next interview.</p>
+      <p>Learn the fundamentals — confidence, presentation, body language, and how to structure your answers.</p>
+      <span class="card-arrow">Start learning →</span>
     </a>
-    
-    <!-- Added Card for STAR Method Builder on the Grid -->
-    <a href="{{ url_for('star_builder') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
+    <a href="{{ url_for('star_builder') }}" class="guide-card card">
+      <span class="guide-icon">🎯</span>
       <h3>STAR Method Builder</h3>
       <p>Build structured, compelling answers to behavioural questions using the proven STAR framework.</p>
+      <span class="card-arrow">Build answers →</span>
     </a>
-
-    <!-- Added Card for Mock Interview on the Grid -->
-    <a href="{{ url_for('interview_setup') }}" class="guide-card card" style="text-decoration: none; color: inherit;">
+    <a href="{{ url_for('interview_setup') }}" class="guide-card card">
+      <span class="guide-icon">🤖</span>
       <h3>Mock Interview</h3>
-      <p>Practice AI-generated interview questions tailored to your role and CV, and get instant feedback.</p>
+      <p>Practice with AI-generated questions tailored to your role and get detailed feedback instantly.</p>
+      <span class="card-arrow">Start interview →</span>
+    </a>
+    <a href="{{ url_for('dashboard') }}" class="guide-card card">
+      <span class="guide-icon">📊</span>
+      <h3>My Progress</h3>
+      <p>Track your improvement over time and review past feedback.</p>
+      <span class="card-arrow">View progress →</span>
     </a>
   </div>
+
 </div>
+
+<script>
+  // Animate score number on load
+  const target = {{ score }};
+  let current = 0;
+  const timer = setInterval(() => {
+    current += 2;
+    if (current >= target) { current = target; clearInterval(timer); }
+    document.getElementById('scoreNum').textContent = current;
+  }, 20);
+</script>
 {% endblock %}
