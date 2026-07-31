@@ -1,4 +1,34 @@
+# Virtual Environment
 venv/
+ENV/
+env/
+
+# Environment Variables & Secrets (CRITICAL FOR SECURITY)
+.env
+.env.local
+
+# Databases
 *.db
+*.sqlite3
+
+# Python cache & compiled files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Operating System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
