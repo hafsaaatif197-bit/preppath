@@ -27,30 +27,35 @@
                 </linearGradient>
               </defs>
               <circle class="track" cx="90" cy="90" r="78"/>
-              <!-- Added |default(0)|int filter to prevent Jinja mathematical crash -->
               <circle class="fill" cx="90" cy="90" r="78"
                 stroke="url(#arcGrad2)"
                 stroke-dasharray="490"
-                stroke-dashoffset="{{ 490 - (490 * (score|default(0)|int) / 100) }}"/>
+                stroke-dashoffset="{{ 490 - (490 * score / 100) }}"/>
             </svg>
             <div class="score-label">
-              <span class="score-number">{{ score|default(0) }}</span>
+              <span class="score-number">{{ score }}</span>
               <span class="score-pct">/ 100</span>
             </div>
           </div>
         </div>
         <div class="progress-bar-wrap" style="margin-top:0.5rem;">
-          <div class="progress-bar-fill" style="width:{{ score|default(0) }}%;"></div>
+          <div class="progress-bar-fill" style="width:{{ score }}%;"></div>
         </div>
         <p style="font-size:0.8rem;margin-top:0.75rem;">
-          {% set clean_score = score|default(0)|int %}
-          {% if clean_score < 40 %}Keep going — read the guides and try a mock interview!
-          {% elif clean_score < 70 %}Good progress — keep practising!
-          {% elif clean_score < 90 %}Almost there — great work!
+          {% if score < 40 %}Keep going — read the guides and try a mock interview!
+          {% elif score < 70 %}Good progress — keep practising!
+          {% elif score < 90 %}Almost there — great work!
           {% else %}Excellent — you are well prepared! 🎉{% endif %}
         </p>
       </div>
-    </div> <!-- FIXED: Closing tag for LEFT COLUMN div -->
+
+      <!-- Interview Planner shortcut -->
+      <div class="card">
+        <span class="section-label">Interview Planner</span>
+        <p style="font-size:0.85rem;margin:0.5rem 0 1.25rem;">Set your interview date and get a day-by-day preparation plan.</p>
+        <a href="{{ url_for('planner') }}" class="btn btn-primary btn-full">Open Planner →</a>
+      </div>
+    </div>
 
     <!-- RIGHT COLUMN -->
     <div>
