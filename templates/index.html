@@ -10,7 +10,7 @@
       <p class="hero-sub">Your personalised interview preparation platform. Follow the path, land the role.</p>
       <div class="hero-actions">
         <a href="{{ url_for('interview_setup') }}" class="btn btn-primary btn-lg">Start Mock Interview</a>
-        <a href="{{ url_for('guides') }}" class="btn btn-primary btn-lg">Browse Guides</a>
+        <a href="{{ url_for('guides') }}" class="btn btn-outline">Browse Guides</a>
       </div>
     </div>
     <div class="score-arc-wrapper">
@@ -84,6 +84,12 @@
       <h3>My Progress</h3>
       <p>Track your improvement over time and review past feedback.</p>
       <span class="card-arrow">View progress →</span>
+    </a>
+    <a href="{{ url_for('planner') }}" class="guide-card card">
+      <span class="guide-icon">🗓️</span>
+      <h3>Interview Planner</h3>
+      <p>Set your interview date and job role to get a day-by-day preparation plan.</p>
+      <span class="card-arrow">Open planner →</span>
     </a>
   </div>
 
