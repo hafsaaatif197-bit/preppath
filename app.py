@@ -136,11 +136,21 @@ def register():
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
-        password = generate_password_hash(request.form["password"])
+        password = request.form["password"]
+        confirm_password = request.form.get("confirm_password", "")
+
+        if password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return render_template("register.html")
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long.", "danger")
+            return render_template("register.html")
+
+        hashed_password = generate_password_hash(password)
         try:
             conn = get_db()
             conn.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                         (name, email, password))
+                         (name, email, hashed_password))
             conn.commit()
             conn.close()
             flash("Account created! Please log in.", "success")
