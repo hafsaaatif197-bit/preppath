@@ -136,11 +136,21 @@ def register():
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
-        password = generate_password_hash(request.form["password"])
+        password = request.form["password"]
+        confirm_password = request.form.get("confirm_password", "")
+
+        if password != confirm_password:
+            flash("Passwords do not match.", "danger")
+            return render_template("register.html")
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long.", "danger")
+            return render_template("register.html")
+
+        hashed_password = generate_password_hash(password)
         try:
             conn = get_db()
             conn.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
-                         (name, email, password))
+                         (name, email, hashed_password))
             conn.commit()
             conn.close()
             flash("Account created! Please log in.", "success")
@@ -343,6 +353,57 @@ Overall Tip: [one specific, actionable improvement tip]"""
         q_total=TOTAL_INTERVIEW_QUESTIONS,
         session_complete=session_complete
     )
+
+# ─── INTERVIEW PLANNER (dedicated page) ─────────────────────────────
+@app.route("/planner", methods=["GET", "POST"])
+@login_required
+def planner():
+    if request.method == "POST":
+        interview_date = request.form["interview_date"]
+        job_role = request.form["job_role"]
+        conn = get_db()
+        conn.execute("DELETE FROM interview_planner WHERE user_id = ?", (current_user.id,))
+        conn.execute(
+            "INSERT INTO interview_planner (user_id, interview_date, job_role) VALUES (?,?,?)",
+            (current_user.id, interview_date, job_role)
+        )
+        conn.commit()
+        conn.close()
+        return redirect(url_for("planner"))
+
+    conn = get_db()
+    plan_row = conn.execute(
+        "SELECT * FROM interview_planner WHERE user_id = ? ORDER BY created_at DESC LIMIT 1",
+        (current_user.id,)
+    ).fetchone()
+    conn.close()
+
+    daily_plan = None
+    if plan_row:
+        interview_date = datetime.strptime(plan_row["interview_date"], "%Y-%m-%d")
+        today = datetime.today()
+        days_left = (interview_date - today).days
+        daily_plan = generate_plan(days_left, plan_row["job_role"])
+
+    return render_template("planner.html", planner=plan_row, daily_plan=daily_plan)
+
+def generate_plan(days_left, job_role):
+    if days_left <= 0:
+        return [{"day": "Today", "task": "Good luck in your interview!"}]
+    tasks = [
+        "Read the Confidence & Mindset guide",
+        "Read the Dressing & Presentation guide",
+        "Read the Body Language guide",
+        "Read the How to Answer Questions guide",
+        "Build 2 STAR method answers",
+        "Complete your first mock interview",
+        "Review your feedback and do another mock interview",
+    ]
+    plan = []
+    for i in range(min(days_left, len(tasks))):
+        day_label = f"Day {i+1}" if i > 0 else "Today"
+        plan.append({"day": day_label, "task": tasks[i]})
+    return plan
 
 # ─── DASHBOARD ──────────────────────────────────────────────────────
 @app.route("/dashboard")

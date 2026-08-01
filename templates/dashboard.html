@@ -1,16 +1,88 @@
 {% extends "base.html" %}
-{% block title %}Dashboard — PrepPath{% endblock %}
+{% block title %}My Progress — PrepPath{% endblock %}
 {% block content %}
-<div style="max-width:600px;margin:80px auto;text-align:center;padding:2rem;">
-  <h1 style="font-family:Georgia,serif;color:#0A1628;">
-    PrepPath — Coming Soon
-  </h1>
-  <p style="color:#666;margin-top:1rem;">
-    Authentication working. Dashboard under development.
-  </p>
-  <a href="{{ url_for('logout') }}"
-     style="display:inline-block;margin-top:2rem;color:#2E86C1;">
-    Logout
-  </a>
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <span class="current">My Progress</span>
+  </div>
+
+  <h2>My Progress</h2>
+  <p style="margin-bottom:2rem;">Track how far you have come and plan what is next.</p>
+
+  <div class="dashboard-grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <!-- Readiness Score -->
+      <div class="card" style="margin-bottom:1.5rem;text-align:center;">
+        <span class="section-label">Readiness Score</span>
+        <div class="score-arc-wrapper" style="padding:1rem 0;">
+          <div class="score-arc">
+            <svg viewBox="0 0 180 180" width="160" height="160">
+              <defs>
+                <linearGradient id="arcGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%"   stop-color="#2E86C1"/>
+                  <stop offset="100%" stop-color="#56CCF2"/>
+                </linearGradient>
+              </defs>
+              <circle class="track" cx="90" cy="90" r="78"/>
+              <circle class="fill" cx="90" cy="90" r="78"
+                stroke="url(#arcGrad2)"
+                stroke-dasharray="490"
+                stroke-dashoffset="{{ 490 - (490 * score / 100) }}"/>
+            </svg>
+            <div class="score-label">
+              <span class="score-number">{{ score }}</span>
+              <span class="score-pct">/ 100</span>
+            </div>
+          </div>
+        </div>
+        <div class="progress-bar-wrap" style="margin-top:0.5rem;">
+          <div class="progress-bar-fill" style="width:{{ score }}%;"></div>
+        </div>
+        <p style="font-size:0.8rem;margin-top:0.75rem;">
+          {% if score < 40 %}Keep going — read the guides and try a mock interview!
+          {% elif score < 70 %}Good progress — keep practising!
+          {% elif score < 90 %}Almost there — great work!
+          {% else %}Excellent — you are well prepared! 🎉{% endif %}
+        </p>
+      </div>
+
+      <!-- Interview Planner shortcut -->
+      <div class="card">
+        <span class="section-label">Interview Planner</span>
+        <p style="font-size:0.85rem;margin:0.5rem 0 1.25rem;">Set your interview date and get a day-by-day preparation plan.</p>
+        <a href="{{ url_for('planner') }}" class="btn btn-primary btn-full">Open Planner →</a>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <span class="section-label">Past Interview Sessions</span>
+      {% if sessions %}
+        {% for s in sessions %}
+        <div class="session-item">
+          <div class="session-role">{{ s.job_role }} — <span style="color:var(--text-muted);font-weight:400;text-transform:capitalize;">{{ s.interview_type }}</span></div>
+          <div class="session-date">{{ s.created_at[:16] }}</div>
+          <div class="session-q" style="margin-top:0.5rem;color:var(--blue-sky);font-size:0.85rem;">Q: {{ s.question }}</div>
+          <div style="margin-top:0.5rem;font-size:0.85rem;color:var(--off-white);">A: {{ s.answer[:120] }}{% if s.answer|length > 120 %}...{% endif %}</div>
+          <details style="margin-top:0.75rem;">
+            <summary style="font-size:0.8rem;color:var(--text-muted);cursor:pointer;">View Feedback</summary>
+            <div style="margin-top:0.5rem;padding:0.75rem;background:rgba(46,134,193,0.06);border-radius:8px;font-size:0.85rem;color:var(--off-white);white-space:pre-line;">{{ s.feedback }}</div>
+          </details>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="empty-state card">
+          <span class="empty-icon">🤖</span>
+          <h3>No sessions yet</h3>
+          <p style="margin:0.5rem 0 1.5rem;">Complete a mock interview to see your history and feedback here.</p>
+          <a href="{{ url_for('interview_setup') }}" class="btn btn-primary">Start Mock Interview</a>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
 </div>
 {% endblock %}

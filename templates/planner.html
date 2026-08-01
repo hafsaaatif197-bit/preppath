@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Interview Planner — PrepPath{% endblock %}
+{% block content %}
+<div class="page">
+  <div class="breadcrumb">
+    <a href="{{ url_for('home') }}">Home</a><span>/</span>
+    <span class="current">Interview Planner</span>
+  </div>
+
+  <h2>Interview Planner</h2>
+  <p style="margin-bottom:2rem;">Set your interview date and job role to get a day-by-day preparation plan.</p>
+
+  <div class="dashboard-grid">
+
+    <!-- LEFT COLUMN -->
+    <div>
+      <div class="card">
+        <span class="section-label">Plan Details</span>
+        <form method="POST" action="{{ url_for('planner') }}" style="margin-top:1rem;">
+          <div class="form-group">
+            <label>Job Role</label>
+            <input type="text" name="job_role" class="form-control"
+              placeholder="e.g. Software Engineer"
+              value="{{ planner.job_role if planner else '' }}" required />
+          </div>
+          <div class="form-group">
+            <label>Interview Date</label>
+            <input type="date" name="interview_date" class="form-control"
+              value="{{ planner.interview_date if planner else '' }}" required />
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Save Plan</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div>
+      <span class="section-label">Your Preparation Plan</span>
+      {% if daily_plan %}
+        <div class="card" style="margin-top:1rem;">
+          {% for item in daily_plan %}
+          <div class="plan-item">
+            <span class="plan-day">{{ item.day }}</span>
+            <span class="plan-task">{{ item.task }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty-state card">
+          <span class="empty-icon">🗓️</span>
+          <h3>No plan yet</h3>
+          <p style="margin:0.5rem 0 1.5rem;">Save your interview date and role on the left to generate your day-by-day plan.</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+{% endblock %}
