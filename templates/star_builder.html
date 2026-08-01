@@ -24,6 +24,7 @@
 
   <div class="card">
     <form method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="form-group">
         <label>Interview Question (optional)</label>
         <input type="text" name="question" class="form-control" placeholder='e.g. "Tell me about a time you worked in a team"' />
