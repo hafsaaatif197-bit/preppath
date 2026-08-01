@@ -17,6 +17,7 @@
     <a href="{{ url_for('star_builder') }}" {% if request.endpoint=='star_builder' %}class="active"{% endif %}>🎯 <span>STAR</span></a>
     <a href="{{ url_for('interview_setup') }}" {% if 'interview' in request.endpoint %}class="active"{% endif %}>🤖 <span>Interview</span></a>
     <a href="{{ url_for('dashboard') }}" {% if request.endpoint=='dashboard' %}class="active"{% endif %}>📊 <span>Progress</span></a>
+    <a href="{{ url_for('account') }}" {% if request.endpoint=='account' %}class="active"{% endif %}>⚙️ <span>Account</span></a>
     <a href="{{ url_for('planner') }}" {% if request.endpoint=='planner' %}class="active"{% endif %}>🗓️ <span>Planner</span></a>
     <a href="{{ url_for('logout') }}" class="btn-logout">Logout</a>
   </div>
