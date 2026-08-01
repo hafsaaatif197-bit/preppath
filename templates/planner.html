@@ -17,6 +17,7 @@
       <div class="card">
         <span class="section-label">Plan Details</span>
         <form method="POST" action="{{ url_for('planner') }}" style="margin-top:1rem;">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <div class="form-group">
             <label>Job Role</label>
             <input type="text" name="job_role" class="form-control"
