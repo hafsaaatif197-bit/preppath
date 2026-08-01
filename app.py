@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf.csrf import CSRFProtect
 import sqlite3
 import anthropic
 import pdfplumber
@@ -11,7 +12,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = "preppath-secret-key-2024"
+app.secret_key = os.environ.get("SECRET_KEY", "dev-fallback-key-change-me")
+csrf = CSRFProtect(app)
 
 # ─── LOGIN MANAGER SETUP ────────────────────────────────────────────
 login_manager = LoginManager()
