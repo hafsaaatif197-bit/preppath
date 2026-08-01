@@ -3,6 +3,7 @@ from flask_login import LoginManager, UserMixin, login_user, logout_user, login_
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf.csrf import CSRFProtect
 import sqlite3
+import re
 import anthropic
 import pdfplumber
 import os
@@ -97,6 +98,23 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
+def sanitize_cv_text(text, user):
+    """Strip personal/identifying information from CV text before it is sent
+    to the Anthropic API. Only the substance of the CV (skills, experience,
+    education) is needed to generate a question — names, emails, phone
+    numbers and links are not, and should not leave the app for a
+    third-party API call."""
+    if not text:
+        return text
+    text = re.sub(r'\S+@\S+\.\S+', '[email removed]', text)
+    text = re.sub(r'(\+?\d[\d\s\-\(\)]{7,}\d)', '[phone removed]', text)
+    text = re.sub(r'(https?://\S+|www\.\S+)', '[link removed]', text)
+    if user and getattr(user, "name", None):
+        for part in user.name.split():
+            if len(part) > 2:
+                text = re.sub(re.escape(part), '[name removed]', text, flags=re.IGNORECASE)
+    return text
 
 def log_activity(user_id, activity_type):
     conn = get_db()
@@ -276,6 +294,7 @@ def interview_setup():
                     text = page.extract_text()
                     if text:
                         cv_text += text
+        cv_text = sanitize_cv_text(cv_text, current_user)
         session["cv_text"] = cv_text[:1500]
         return redirect(url_for("interview_question"))
     return render_template("interview_setup.html")
