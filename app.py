@@ -167,16 +167,17 @@ def register():
             return render_template("register.html")
 
         hashed_password = generate_password_hash(password)
+        conn = get_db()
         try:
-            conn = get_db()
             conn.execute("INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
                          (name, email, hashed_password))
             conn.commit()
-            conn.close()
             flash("Account created! Please log in.", "success")
             return redirect(url_for("login"))
-        except:
+        except sqlite3.IntegrityError:
             flash("Email already exists. Try logging in.", "danger")
+        finally:
+            conn.close()
     return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
@@ -289,11 +290,15 @@ def interview_setup():
         cv_text = ""
         if "cv" in request.files and request.files["cv"].filename != "":
             cv_file = request.files["cv"]
-            with pdfplumber.open(cv_file) as pdf:
-                for page in pdf.pages:
-                    text = page.extract_text()
-                    if text:
-                        cv_text += text
+            try:
+                with pdfplumber.open(cv_file) as pdf:
+                    for page in pdf.pages:
+                        text = page.extract_text()
+                        if text:
+                            cv_text += text
+            except Exception:
+                flash("We couldn't read that file — please make sure it's a valid PDF.", "danger")
+                return render_template("interview_setup.html")
         cv_text = sanitize_cv_text(cv_text, current_user)
         session["cv_text"] = cv_text[:1500]
         return redirect(url_for("interview_question"))
@@ -425,6 +430,75 @@ def generate_plan(days_left, job_role):
         day_label = f"Day {i+1}" if i > 0 else "Today"
         plan.append({"day": day_label, "task": tasks[i]})
     return plan
+
+# ─── ACCOUNT ────────────────────────────────────────────────────────
+@app.route("/account")
+@login_required
+def account():
+    return render_template("account.html")
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def update_profile():
+    name = request.form["name"]
+    email = request.form["email"]
+    conn = get_db()
+    try:
+        conn.execute("UPDATE users SET name = ?, email = ? WHERE id = ?",
+                     (name, email, current_user.id))
+        conn.commit()
+        flash("Profile updated successfully.", "success")
+    except sqlite3.IntegrityError:
+        flash("That email is already in use by another account.", "danger")
+    finally:
+        conn.close()
+    return redirect(url_for("account"))
+
+@app.route("/account/change-password", methods=["POST"])
+@login_required
+def change_password():
+    current_password = request.form["current_password"]
+    new_password = request.form["new_password"]
+    confirm_new_password = request.form["confirm_new_password"]
+
+    conn = get_db()
+    user = conn.execute("SELECT * FROM users WHERE id = ?", (current_user.id,)).fetchone()
+
+    if not check_password_hash(user["password"], current_password):
+        flash("Current password is incorrect.", "danger")
+        conn.close()
+        return redirect(url_for("account"))
+    if new_password != confirm_new_password:
+        flash("New passwords do not match.", "danger")
+        conn.close()
+        return redirect(url_for("account"))
+    if len(new_password) < 8:
+        flash("New password must be at least 8 characters long.", "danger")
+        conn.close()
+        return redirect(url_for("account"))
+
+    conn.execute("UPDATE users SET password = ? WHERE id = ?",
+                 (generate_password_hash(new_password), current_user.id))
+    conn.commit()
+    conn.close()
+    flash("Password updated successfully.", "success")
+    return redirect(url_for("account"))
+
+@app.route("/account/delete", methods=["POST"])
+@login_required
+def delete_account():
+    user_id = current_user.id
+    conn = get_db()
+    conn.execute("DELETE FROM interview_sessions WHERE user_id = ?", (user_id,))
+    conn.execute("DELETE FROM star_answers WHERE user_id = ?", (user_id,))
+    conn.execute("DELETE FROM user_activity WHERE user_id = ?", (user_id,))
+    conn.execute("DELETE FROM interview_planner WHERE user_id = ?", (user_id,))
+    conn.execute("DELETE FROM users WHERE id = ?", (user_id,))
+    conn.commit()
+    conn.close()
+    logout_user()
+    flash("Your account and all associated data have been permanently deleted.", "success")
+    return redirect(url_for("login"))
 
 # ─── DASHBOARD ──────────────────────────────────────────────────────
 @app.route("/dashboard")
