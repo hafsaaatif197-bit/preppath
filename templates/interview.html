@@ -17,6 +17,7 @@
 
   <div class="card">
     <form method="POST" action="{{ url_for('interview_submit') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <div class="form-group">
         <label>Your Answer</label>
         <button type="button" class="mic-btn" id="micBtn" onclick="toggleMic()">
