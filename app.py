@@ -318,12 +318,17 @@ Their skills: {skills}
 CV summary: {cv_text}
 Return only the question itself, nothing else."""
 
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=200,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    question = message.content[0].text
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=200,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        question = message.content[0].text
+    except Exception:
+        flash("We couldn't generate a question right now. Please try again in a moment.", "danger")
+        return redirect(url_for("interview_setup"))
+
     session["current_question"] = question
     session["interview_q_num"] = session.get("interview_q_num", 0) + 1
     return render_template(
@@ -353,12 +358,16 @@ Relevance: [score out of 10] - [one sentence]
 Completeness: [score out of 10] - [one sentence]
 Overall Tip: [one specific, actionable improvement tip]"""
 
-    message = client.messages.create(
-        model="claude-sonnet-4-6",
-        max_tokens=400,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    feedback = message.content[0].text
+    try:
+        message = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=400,
+            messages=[{"role": "user", "content": prompt}]
+        )
+        feedback = message.content[0].text
+    except Exception:
+        flash("We couldn't generate feedback right now. Please try submitting your answer again.", "danger")
+        return redirect(url_for("interview_question"))
 
     conn = get_db()
     conn.execute(
