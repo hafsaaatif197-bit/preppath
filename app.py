@@ -8,6 +8,7 @@ import anthropic
 import pdfplumber
 import os
 from datetime import datetime, timedelta
+from math import ceil
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -425,6 +426,7 @@ def planner():
 def generate_plan(days_left, job_role):
     if days_left <= 0:
         return [{"day": "Today", "task": "Good luck in your interview!"}]
+
     tasks = [
         "Read the Confidence & Mindset guide",
         "Read the Dressing & Presentation guide",
@@ -434,10 +436,30 @@ def generate_plan(days_left, job_role):
         "Complete your first mock interview",
         "Review your feedback and do another mock interview",
     ]
+
     plan = []
-    for i in range(min(days_left, len(tasks))):
-        day_label = f"Day {i+1}" if i > 0 else "Today"
-        plan.append({"day": day_label, "task": tasks[i]})
+
+    if days_left >= len(tasks):
+        # Enough time: one task per day, extra days get repeated practice
+        for i in range(len(tasks)):
+            day_label = f"Day {i+1}" if i > 0 else "Today"
+            plan.append({"day": day_label, "task": tasks[i]})
+        for i in range(len(tasks), days_left):
+            plan.append({
+                "day": f"Day {i+1}",
+                "task": f"Complete another mock interview for {job_role} and review your feedback"
+            })
+    else:
+        # Tight timeframe: compress tasks so everything still fits
+        tasks_per_day = ceil(len(tasks) / days_left)
+        for day_num in range(days_left):
+            day_label = f"Day {day_num+1}" if day_num > 0 else "Today"
+            start = day_num * tasks_per_day
+            end = min(start + tasks_per_day, len(tasks))
+            day_tasks = tasks[start:end]
+            if day_tasks:
+                plan.append({"day": day_label, "task": "; ".join(day_tasks)})
+
     return plan
 
 # ─── ACCOUNT ────────────────────────────────────────────────────────
