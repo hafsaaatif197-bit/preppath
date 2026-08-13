@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = os.environ.get("SECRET_KEY", "dev-fallback-key-change-me")
+app.secret_key = os.environ.get("SECRET_KEY")
 csrf = CSRFProtect(app)
 
 # ─── LOGIN MANAGER SETUP ────────────────────────────────────────────
@@ -547,4 +547,4 @@ def dashboard():
 # ─── RUN ────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     init_db()
-    app.run(debug=True)
+    app.run()
